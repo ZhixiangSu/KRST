@@ -73,3 +73,19 @@ After training, the best model is saved in `save\$dataset$$suffix$\relation_pred
 By default, KRST load the saved best validation model for testing. Run 'test.sh' to get the test results.
 You can just download the model trained by our team (currently not available because of anonymous requirement) and test them.
 
+### Interpretation
+
+Before doing interpretation, you need to put two files in `data\relation_prediction_path_data\$dataset$\interpret`:
+* `best_val.pth`: model loaded for interpretation.
+* `interpret.txt`: triplets to be interpreted.
+
+Then run 'interpret.sh' to generate clustering results (pyfig.eps) and confidence score (result.txt). You can download an example from here (currently not available because of anonymous requirement).
+
+## Citations
+
+Currently not available.
+
+## Q&A
+
+For any questions, please leave an issue.
+
