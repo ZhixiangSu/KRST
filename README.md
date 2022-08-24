@@ -26,7 +26,7 @@ Then execute the following command:
 ```shell
 ./generate_train_and_test.sh
 ```
-you can reproduce the results mentioned in paper.
+you can reproduce the confidence results mentioned in the paper.
 
 Also, you can just download the model trained by our team (currently not available because of anonymous requirement) and test them using
 ```shell
@@ -37,7 +37,7 @@ Also, you can just download the model trained by our team (currently not availab
 
 # Dataset Preparation
 
-All datasets mentioned in paper are provided in `data\data`. They are from [BERTRL](https://github.com/zhw12/BERTRL/blob/master/README.md) and reorganized. If you want to mannually create a new dataset, please provide the following files:
+All datasets mentioned in paper are provided in `data\data`. They are from [BERTRL](https://github.com/zhw12/BERTRL/blob/master/README.md) and are reorganized. If you want to mannually create a new dataset, please provide the following files:
 * `train$suffix$.txt`: File for training. Each line is a triplet (h,r,t) seperated by '\t'.
 * `valid.txt` and `test.txt`: Files for validation and testing. 
 * `relation2text.txt` and `entity2text.txt`: Description file. Each line contains a relation (or entity) and corresponding descriptions, seperated by '\t'.
@@ -45,3 +45,17 @@ All datasets mentioned in paper are provided in `data\data`. They are from [BERT
 ```shell
 python neg_sampling.py --dataset $dataset --suffix $suffix --finding_mode $finding_mode --training_mode test --neg_num 50 --seed $seed
 ```shell
+
+# Path Finding and Path Filtering
+
+After preparing the dataset, you can do path finding and path filtering using the shell file 'generate.sh'. The parameters can be fine-tuned include:
+* `npaths_ranking`: number of paths generated for each triplet.
+* `support_type`: choice of path filtering function. 0: none, 1: relation path coverage 2: relation path confidence.
+* `support_threshold`: threshold of path filtering function.
+* `search_depth`: breadth-first search depth.
+
+Then you can see the generated files in `data\relation_prediction_path_data\$dataset$\ranking_$finding_mode$$suffix$'.
+
+# Sentence Formation and KRST training
+
+
