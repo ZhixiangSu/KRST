@@ -4,6 +4,7 @@ This repository contains code and data for AAAI submission **Multi-Aspect Explai
 In the paper, we propose a novel approach for inductive relation prediction namely KRST. KRST adopts sentence transformer for path-based prediction and could provide a comprehensive explanation.
 
 
+
 ## Requirements
 
 - colorama 0.4.4
