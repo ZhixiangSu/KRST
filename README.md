@@ -20,4 +20,10 @@ In the paper, we propose a novel approach for inductive relation prediction name
 We provide an all-in-one file `generate_train_and_test.sh` to automatic generate paths, train model, and test model.  To specify datasets and few-shot settings, change variables in `generate_train_and_test.sh` (line 1-3) as follows:
 * `dataset`: Available datasets include `FB15k-237-subset`, `NELL-995-subset`, `WN18RR-subset`, `FB15k-237-subset-inductive`, `NELL-995-subset-inductive`, and `WN18RR-subset-inductive`.
 * `suffix`: This is for few-shot settings, including `_full`, `_2000` and `_1000`.
-* `finding_mode`: whether `head` or `tail` is fixed should be specified.
+* `finding_mode`: whether `head` or `tail` is fixed.
+
+Then execute
+```shell
+./generate_train_and_test.sh
+```
+you can reproduce the results mentioned in paper.
