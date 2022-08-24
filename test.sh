@@ -2,7 +2,7 @@ set -v
 dataset="FB15k-237-subset"
 suffix="_full"
 finding_mode="head"
-device="cuda:0"
+device="cuda:1"
 seed=42
 relation_prediction_lr=1e-5
 

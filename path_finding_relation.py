@@ -85,7 +85,7 @@ else:
 if args.ranking_dataset is None:
     if args.training_mode == 'interpret':
         ranking_dataset = os.path.join("data/relation_prediction_path_data/", args.dataset,
-                                       f"interpret/ranking_interpret.txt")
+                                       f"interpret/interpret.txt")
     else:
         ranking_dataset = os.path.join("data/relation_prediction_path_data/", args.dataset,
                                    f"ranking_{args.finding_mode}{args.suffix}/ranking_{args.training_mode}.txt")

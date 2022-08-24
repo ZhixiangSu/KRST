@@ -72,11 +72,12 @@ else:
     output_dir=args.output_dir
 
 if args.model_load_file is None:
-    model_load_file=os.path.join(f"save/{args.dataset}{args.suffix}", "interpret/best_val.pth")
+    model_load_file = os.path.join('data/relation_prediction_path_data/', args.dataset,
+                                   f"interpret/best_val.pth")
 else:
     model_load_file=args.model_load_file
 
-interpret_triplets = load_triplets(os.path.join(path_dir, "ranking_interpret.txt"))
+interpret_triplets = load_triplets(os.path.join(path_dir, "interpret.txt"))
 def load_paths(relation_dir,entity_dir,data_size,max_path_num):
     paths = []
     f1 = open(relation_dir, encoding='utf-8')
