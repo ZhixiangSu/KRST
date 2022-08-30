@@ -27,7 +27,7 @@ Then by executing the following command:
 ```shell
 ./generate_train_and_test.sh
 ```
-you can reproduce the confidence results mentioned in the paper.
+you can reproduce the confidence results mentioned in the paper. And testing results are stored in `save\$dataset$$suffix$\relation_prediction_$finding_mode$\` (see KRST testing section for more details).
 
 Also, you can just download the model trained by our team here (currently not available because of anonymous requirement) and test them using
 ```shell
@@ -73,7 +73,10 @@ After training, the best model is saved in `save\$dataset$$suffix$\relation_pred
 
 ### KRST testing
 
-By default, KRST loads the saved best validation model for testing. Run 'test.sh' to get the test results.
+By default, KRST loads the saved best validation model for testing. Run 'test.sh' to get the test results (testing results are stored in `save\$dataset$$suffix$\relation_prediction_$finding_mode$\`):
+* `scores.txt`: each line contains the scores for one positive triplet and corresponding negative triplets. Scores are separated by '\t' and follow the order in `ranking_$finding_mode$`.
+* `indexes.txt`: each line contains the sorted index of scores (argsort in python) in `scores.txt`.
+
 You can just download the model trained by our team here (currently not available because of the anonymous requirement) and test them.
 
 ### Interpretation
