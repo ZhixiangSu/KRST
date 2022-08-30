@@ -270,20 +270,24 @@ def reshape_relation_prediction_ranking_data(ranking_triplets,ranking_paths,neg_
     reshaped_triplets=[]
     reshaped_paths=[]
     labels=[]
+    indexes=[]
     for i in range(0,len(ranking_triplets),neg_size):
         triplets=ranking_triplets[i:i+neg_size]
         paths=ranking_paths[i:i+neg_size]
+        inverse_index=list(np.arange(neg_size))
         truth=triplets[0]
-        t_p=list(zip(triplets,paths))
+        t_p=list(zip(triplets,paths,inverse_index))
         random.shuffle(t_p)
-        triplets,paths=zip(*t_p)
+        triplets,paths,inverse_index=zip(*t_p)
         label=triplets.index(truth)
         reshaped_triplets.append(triplets)
         reshaped_paths.append(paths)
         labels.append(label)
+        index=np.argsort(inverse_index)
+        indexes.append(index)
     reshaped_triplets = [["; ".join([all_dict[er] for er in st])+" [SEP]" for st in st1] for st1 in reshaped_triplets]
     reshaped_paths = [[["; ".join([all_dict[er] for er in s])+" [SEP]" for s in st] for st in st2] for st2 in reshaped_paths]
-    return reshaped_triplets,reshaped_paths,labels
+    return reshaped_triplets,reshaped_paths,labels,indexes
 def myConvert(data):
     for i in range(len(data[0])):
         yield [d[i] for d in data]

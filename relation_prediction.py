@@ -112,9 +112,9 @@ ranking_paths = load_paths(os.path.join(path_dir, "relation_paths_test.txt"),
 text,relation_texts = load_text(text_dir)
 all_dict = {**text['entity'], **text['relation']}
 
-train_triplets,train_paths,train_labels=reshape_relation_prediction_ranking_data(train_triplets,train_paths,args.neg_sample_num_train,all_dict)
-valid_triplets,valid_paths,valid_labels=reshape_relation_prediction_ranking_data(valid_triplets,valid_paths,args.neg_sample_num_valid,all_dict)
-ranking_triplets,ranking_paths,ranking_labels=reshape_relation_prediction_ranking_data(ranking_triplets,ranking_paths,args.neg_sample_num_test,all_dict)
+train_triplets,train_paths,train_labels,_=reshape_relation_prediction_ranking_data(train_triplets,train_paths,args.neg_sample_num_train,all_dict)
+valid_triplets,valid_paths,valid_labels,_=reshape_relation_prediction_ranking_data(valid_triplets,valid_paths,args.neg_sample_num_valid,all_dict)
+ranking_triplets,ranking_paths,ranking_labels,ranking_indexes=reshape_relation_prediction_ranking_data(ranking_triplets,ranking_paths,args.neg_sample_num_test,all_dict)
 
 
 
@@ -250,7 +250,7 @@ def test():
     metrics=np.array([0.,0.,0.,0.,0.]) # MR, MRR, Hit@1, Hit@3, Hit@10
     nb_ranking_steps = 0
     scores=[]
-    indexes=[]
+    ranking_positions=[]
     for batch in ranking_data_loader:
         sentence1, sentence2, targets = batch
         # sentence1 = [[" [SEP] ".join([all_dict[er] for er in st]) for st in st1] for st1 in sentence1]
@@ -272,18 +272,19 @@ def test():
                 outputs = torch.stack(outputs)
         metrics+=cal_metrics(outputs.cpu().numpy(),targets.cpu().numpy())
         batch_scores = np.array(outputs.cpu().numpy())
-        batch_indexes = np.argsort(-batch_scores, axis=1)
+        batch_positions = np.argsort(-batch_scores, axis=1)
         scores.append(batch_scores)
-        indexes.append(batch_indexes)
+        ranking_positions.append(batch_positions)
         nb_ranking_steps += 1
         ranking_pbar.update(len(targets))
 
     scores=np.concatenate(scores)
-    indexes=np.concatenate(indexes)
+    ordered_scores=np.array([scores[i][list(ranking_indexes[i])] for i in range(len(scores))])
+    ordered_positions=np.argsort(-ordered_scores, axis=1)
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
-    np.savetxt(os.path.join(output_dir,"indexes.txt"),indexes,fmt="%d", delimiter="\t")
-    np.savetxt(os.path.join(output_dir,"scores.txt"), scores,fmt="%.5f", delimiter="\t")
+    np.savetxt(os.path.join(output_dir,"indexes.txt"),ordered_positions,fmt="%d", delimiter="\t")
+    np.savetxt(os.path.join(output_dir,"scores.txt"), ordered_scores,fmt="%.5f", delimiter="\t")
     metrics=metrics/nb_ranking_steps
     ranking_pbar.close()
     print(f"MR: {metrics[0]}, MRR: {metrics[1]}, Hit@1: {metrics[2]}, Hit@3: {metrics[3]}, Hit@10: {metrics[4]}")
