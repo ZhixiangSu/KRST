@@ -63,6 +63,8 @@ parser.add_argument('--do_train',action='store_true', default=False,
                     help='whether train or not')
 parser.add_argument('--do_test',action='store_true', default=False,
                     help='whether test or not')
+parser.add_argument('--output_dir', type=str, default=None,
+                    help='location to output test results')
 args = parser.parse_args()
 
 
@@ -90,6 +92,11 @@ if args.model_save_dir is None:
     model_save_dir=os.path.join(f"save/{args.dataset}{args.suffix}", f"relation_prediction_{args.mode}/")
 else:
     model_save_dir=args.model_save_dir
+if args.output_dir is None:
+    output_dir=os.path.join(f"output/{args.dataset}{args.suffix}", f"relation_prediction_{args.mode}/")
+else:
+    output_dir=args.output_dir
+
 
 
 train_triplets = load_triplets(os.path.join(path_dir, "ranking_train.txt"))
@@ -242,6 +249,8 @@ def test():
     model.eval()
     metrics=np.array([0.,0.,0.,0.,0.]) # MR, MRR, Hit@1, Hit@3, Hit@10
     nb_ranking_steps = 0
+    scores=[]
+    indexes=[]
     for batch in ranking_data_loader:
         sentence1, sentence2, targets = batch
         # sentence1 = [[" [SEP] ".join([all_dict[er] for er in st]) for st in st1] for st1 in sentence1]
@@ -262,9 +271,19 @@ def test():
                     outputs.append(sim)
                 outputs = torch.stack(outputs)
         metrics+=cal_metrics(outputs.cpu().numpy(),targets.cpu().numpy())
+        batch_scores = np.array(outputs.cpu().numpy())
+        batch_indexes = np.argsort(-batch_scores, axis=1)
+        scores.append(batch_scores)
+        indexes.append(batch_indexes)
         nb_ranking_steps += 1
         ranking_pbar.update(len(targets))
 
+    scores=np.concatenate(scores)
+    indexes=np.concatenate(indexes)
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+    np.savetxt(os.path.join(output_dir,"indexes.txt"),indexes,fmt="%d", delimiter="\t")
+    np.savetxt(os.path.join(output_dir,"scores.txt"), scores,fmt="%.5f", delimiter="\t")
     metrics=metrics/nb_ranking_steps
     ranking_pbar.close()
     print(f"MR: {metrics[0]}, MRR: {metrics[1]}, Hit@1: {metrics[2]}, Hit@3: {metrics[3]}, Hit@10: {metrics[4]}")
