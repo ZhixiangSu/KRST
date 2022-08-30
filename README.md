@@ -20,7 +20,7 @@ In the paper, we propose a novel approach for inductive relation prediction name
 
 We provide an all-in-one file `generate_train_and_test.sh` to automatically extract paths, train model, and test model.  To specify datasets and few-shot settings, change variables in `generate_train_and_test.sh` (line 1-3) as follows:
 * `dataset`: Available datasets include `FB15k-237-subset`, `NELL-995-subset`, `WN18RR-subset`, `FB15k-237-subset-inductive`, `NELL-995-subset-inductive`, and `WN18RR-subset-inductive`.
-* `suffix`: This is for few-shot settings, including `_full`, `_2000` and `_1000`.
+* `suffix`: This is for few-shot settings, including `_full`, `_2000`, and `_1000`.
 * `finding_mode`: whether `head` or `tail` is fixed.
 
 Then by executing the following command:
@@ -38,10 +38,10 @@ Also, you can just download the model trained by our team here (currently not av
 
 ### Dataset Preparation
 
-All datasets mentioned in paper are provided in `data\data`. They are from [BERTRL](https://github.com/zhw12/BERTRL/blob/master/README.md) and are reorganized. If you want to mannually create a new dataset, please provide the following files:
+All datasets mentioned in the paper are provided in `data\data`. They are from [BERTRL](https://github.com/zhw12/BERTRL/blob/master/README.md) and are reorganized. If you want to manually create a new dataset, please provide the following files:
 * `train$suffix$.txt`: file for training. Each line is a triplet (h,r,t) seperated by '\t'.
 * `valid.txt` and `test.txt`: files for validation and testing. 
-* `relation2text.txt` and `entity2text.txt`: description file. Each line contains a relation (or entity) and its corresponding descriptions, seperated by '\t'.
+* `relation2text.txt` and `entity2text.txt`: description file. Each line contains a relation (or entity) and its corresponding descriptions, separated by '\t'.
 * `ranking_head.txt` and `ranking_tail.txt` (optional): files of positive and negative testing triplets. If not provided, use the following command to generate:
 ```shell
 python neg_sampling.py --dataset $dataset --suffix $suffix --finding_mode $finding_mode --training_mode test --neg_num 50
@@ -49,18 +49,18 @@ python neg_sampling.py --dataset $dataset --suffix $suffix --finding_mode $findi
 
 ### Path Finding and Path Filtering
 
-After preparing the dataset, you can do path finding and path filtering using the shell file 'generate.sh'. The parameters can be fine-tuned include:
+After preparing the dataset, you can do path finding and path filtering using the shell file 'generate.sh'. The parameters that can be fine-tuned include:
 * `npaths_ranking`: number of paths generated for each triplet.
 * `support_type`: choice of path filtering function. 0: none, 1: relation path coverage 2: relation path confidence.
 * `support_threshold`: threshold of path filtering function.
 * `search_depth`: breadth-first search depth.
 
 Then you can see the generated files in `data\relation_prediction_path_data\$dataset$\ranking_$finding_mode$$suffix$'.
-If you want to skip this step, please download the generated files here (currently not available because of anonymous requirement).
+If you want to skip this step, please download the generated files here (currently not available because of the anonymous requirement).
 
 ### Sentence Formation and KRST training
 
-Using file 'train.sh', you can format sentence, load pre-trained sentence transformer and train KRST by yourself. The parameters can be fine-tuned include:
+Using file 'train.sh', you can format sentences, load pre-trained sentence transformer, and train KRST by yourself. The parameters that can be fine-tuned include:
 * `epochs`: upper epoch limit.
 * `batch_size`: batch size.
 * `learning_rate`: learning rate.
@@ -71,8 +71,8 @@ After training, the best model is saved in `save\$dataset$$suffix$\relation_pred
 
 ### KRST testing
 
-By default, KRST load the saved best validation model for testing. Run 'test.sh' to get the test results.
-You can just download the model trained by our team here (currently not available because of anonymous requirement) and test them.
+By default, KRST loads the saved best validation model for testing. Run 'test.sh' to get the test results.
+You can just download the model trained by our team here (currently not available because of the anonymous requirement) and test them.
 
 ### Interpretation
 
@@ -80,7 +80,7 @@ Before doing interpretation, you need to put two files in `data\relation_predict
 * `best_val.pth`: model loaded for interpretation.
 * `interpret.txt`: triplets to be interpreted.
 
-Then run 'interpret.sh' to generate clustering results (pyfig.eps) and confidence score (result.txt). You can download an example from here (currently not available because of anonymous requirement).
+Then run 'interpret.sh' to generate clustering results (pyfig.eps) and confidence score (result.txt). You can download an example from here (currently not available because of the anonymous requirement).
 
 ## Citations
 
@@ -89,5 +89,5 @@ Currently not available because of anonymous requirement.
 ## Q&A
 
 For any questions, feel free to leave an issue.
-Thank you very much for your attention and futher contribution :)
+Thank you very much for your attention and further contribution :)
 
