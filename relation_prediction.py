@@ -289,15 +289,14 @@ def test():
     ranking_pbar.close()
     print(f"MR: {metrics[0]}, MRR: {metrics[1]}, Hit@1: {metrics[2]}, Hit@3: {metrics[3]}, Hit@10: {metrics[4]}")
 
-if args.do_train and args.do_test:
+if args.do_train:
     try:
         train()
     except KeyboardInterrupt:
         print("Receive keyboard interrupt, start testing:")
+        model.load_state_dict(torch.load(model_load_file, map_location=device))
         test()
-elif args.do_train:
-    train()
-elif args.do_test:
+if args.do_test:
     # model=torch.nn.DataParallel(model,device_ids=[0,1])
     model.load_state_dict(torch.load(model_load_file, map_location=device))
     test()
