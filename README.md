@@ -60,7 +60,7 @@ After preparing the dataset, you can do path finding and path filtering using th
 Then you can see the generated files in `data\relation_prediction_path_data\$dataset$\ranking_$finding_mode$$suffix$'.
 If you want to skip this step, please download the generated files here (currently not available because of the anonymous requirement).
 
-### Sentence Formation and KRST training
+### Sentence Formation and KRST Training
 
 Using file 'train.sh', you can format sentences, load pre-trained sentence transformer, and train KRST by yourself. The parameters that can be fine-tuned include:
 * `epochs`: upper epoch limit.
@@ -71,7 +71,7 @@ Using file 'train.sh', you can format sentences, load pre-trained sentence trans
 
 After training, the best model is saved in `save\$dataset$$suffix$\relation_prediction_$finding_mode$\best_val.pth`.
 
-### KRST testing
+### KRST Testing
 
 By default, KRST loads the saved best validation model for testing. Run 'test.sh' to get the test results (testing results are stored in `save\$dataset$$suffix$\relation_prediction_$finding_mode$\`):
 * `scores.txt`: each line contains the scores for one positive triplet and corresponding negative triplets. Scores are separated by '\t' and follow the order in `ranking_$finding_mode$`.
