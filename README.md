@@ -7,6 +7,7 @@ In the paper, we propose a novel approach for inductive relation prediction name
 
 ## Requirements
 
+- python 3.6
 - colorama 0.4.4
 - matplotlib 3.3.4
 - networkx 2.5.1
