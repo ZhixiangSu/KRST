@@ -1,6 +1,6 @@
 # Multi-Aspect Explainable Inductive Relation Prediction by Sentence Transformer
 
-This repository contains code and data for AAAI submission **Multi-Aspect Explainable Inductive Relation Prediction by Sentence Transformer**.
+This repository contains code and data for AAAI 2023 paper **Multi-Aspect Explainable Inductive Relation Prediction by Sentence Transformer**.
 In the paper, we propose a novel approach for inductive relation prediction namely KRST. KRST adopts sentence transformer for path-based prediction and could provide a comprehensive explanation.
 
 ![fig](https://raw.githubusercontent.com/AAAI2023AnonymousSubmission7528/KRST/master/fig/fig6.png)
@@ -30,7 +30,7 @@ Then by executing the following command:
 ```
 you can reproduce the confidence results mentioned in the paper. And testing results are stored in `save\$dataset$$suffix$\relation_prediction_$finding_mode$\` (see KRST testing section for more details).
 
-Also, you can just download the model trained by our team here (currently not available because of anonymous requirement) and test them using
+Also, you can just download the model trained by our team [here](https://entuedu-my.sharepoint.com/:f:/g/personal/zhixiang002_e_ntu_edu_sg/EhgMfwCET9BBiK-9iZ_LaqEBbzUrEYzYsjG4loXhSBdGzw?e=JmoPqW) and test them using
 ```shell
 ./test.sh
 ```
@@ -59,7 +59,7 @@ After preparing the dataset, you can do path finding and path filtering using th
 * `search_depth`: breadth-first search depth.
 
 Then you can see the generated files in `data\relation_prediction_path_data\$dataset$\ranking_$finding_mode$$suffix$'.
-If you want to skip this step, please download the generated files here (currently not available because of the anonymous requirement).
+If you want to skip this step, please download the generated files [here](https://entuedu-my.sharepoint.com/:f:/g/personal/zhixiang002_e_ntu_edu_sg/EvtFpRiDHKpAhG-VWrK9PI0Bwvzn3YBAEYIKWpWeL5OtJQ?e=pWv9QH).
 
 ### Sentence Formation and KRST Training
 
@@ -78,7 +78,7 @@ By default, KRST loads the saved best validation model for testing. Run 'test.sh
 * `scores.txt`: each line contains the scores for one positive triplet and corresponding negative triplets. Scores are separated by '\t' and follow the order in `ranking_$finding_mode$`.
 * `indexes.txt`: each line contains the sorted index of scores (argsort in python) in `scores.txt`.
 
-You can just download the model trained by our team here (currently not available because of the anonymous requirement) and test them.
+You can just download the model trained by our team [here](https://entuedu-my.sharepoint.com/:f:/g/personal/zhixiang002_e_ntu_edu_sg/EhgMfwCET9BBiK-9iZ_LaqEBbzUrEYzYsjG4loXhSBdGzw?e=JmoPqW) and test them.
 
 ### Interpretation
 
@@ -86,11 +86,11 @@ Before doing interpretation, you need to put two files in `data\relation_predict
 * `best_val.pth`: model loaded for interpretation.
 * `interpret.txt`: triplets to be interpreted.
 
-Then run 'interpret.sh' to generate clustering results (pyfig.eps) and confidence score (result.txt). You can download an example from here (currently not available because of the anonymous requirement).
+Then run 'interpret.sh' to generate clustering results (pyfig.eps) and confidence score (result.txt). You can download an example from [here](https://entuedu-my.sharepoint.com/:f:/g/personal/zhixiang002_e_ntu_edu_sg/EmDVyAnNIjdBgQOJeTxstbcBLD5I45tBnMhyocsD1ijq3A?e=OowT0a).
 
 ## Citations
 
-Currently not available because of anonymous requirement.
+Currently not available.
 
 ## Q&A
 
