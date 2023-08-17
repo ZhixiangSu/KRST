@@ -90,7 +90,7 @@ Then run 'interpret.sh' to generate clustering results (pyfig.eps) and confidenc
 
 ## Citations
 
-Currently not available.
+Please refer citations [here](https://ojs.aaai.org/index.php/AAAI/article/view/25803)
 
 ## Q&A
 
